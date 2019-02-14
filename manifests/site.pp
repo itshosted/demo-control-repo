@@ -27,6 +27,12 @@ File { backup => false }
 
 node default {
   # This is where you can declare classes for all nodes.
-  # Example:
-  #   class { 'my_class': }
+
+  # Include classes from hiera
+  hiera_include('classes')
+
+  # Default classification (only when these facts are set)
+  unless ( $facts['customer_name'] == undef or $facts['application_name'] == undef or $facts['application_role'] == undef) {
+    include "${facts['customer_name']}_role::${facts['application_name']}::${facts['application_role']}"
+  }
 }

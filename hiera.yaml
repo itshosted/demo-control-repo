@@ -8,5 +8,21 @@ hierarchy:
   - name: 'Yaml backend'
     data_hash: yaml_data
     paths:
+      # Node specific settings (like network details and classification)
       - "nodes/%{trusted.certname}.yaml"
+
+      # Application based settings per customer
+      - "customer_name_%{customer_name}/applications/%{application_name}/role_%{application_role}/instance_%{application_instance}.yaml"
+      - "customer_name_%{customer_name}/applications/%{application_name}/role_%{application_role}/%{customer_environment}.yaml"
+      - "customer_name_%{customer_name}/applications/%{application_name}/role_%{application_role}/common.yaml"
+      - "customer_name_%{customer_name}/applications/%{application_name}/%{customer_environment}.yaml"
+      - "customer_name_%{customer_name}/applications/%{application_name}/common.yaml"
+
+      # OS based settings
+      - "os/%{operatingsystem}/%{operatingsystemmajrelease}.yaml"
+      - "os/%{operatingsystem}/common.yaml"
+      - "osfamily/%{osfamily}.yaml"
+      - "kernel/%{kernel}.yaml"
+
+      # Most generic settings
       - 'common.yaml'
